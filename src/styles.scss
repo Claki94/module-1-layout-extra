@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+// Variables
+$primary-font: 'Roboto', sans-serif;
+$font-size: 15px;
+$alternative-font-color: rgb(255, 255, 255);
+
+$spacing-01: 4px;
+$spacing-02: 8px;
+$spacing-03: 12px;
+$spacing-04: 16px;
+$spacing-05: 24px;
+
+$grey: rgb(235, 235, 235);
+$grey-darken: darken($grey, 10);
+$primary-color: rgb(205, 223, 27);
+$primary-color-darken: darken($primary-color, 40);
+$primary-color-lighten: lighten($primary-color, 45);
+
+// Mixins
+@mixin display-grid($columns, $rows) {
+  display: grid;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+}
+
+@mixin display-flex($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+}
+
+// Styles
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: $primary-font;
+  font-size: $font-size;
+}
+
+body {
+  @include display-grid(none, min-content 1fr min-content);
+  height: 100vh;
+}
+
+header {
+  @include display-flex(column);
+
+  .toolbar {
+    @include display-flex();
+    justify-content: space-between;
+    padding: $spacing-03 $spacing-02;
+
+    input {
+      padding: $spacing-01;
+    }
+
+    div {
+      @include display-flex();
+      align-items: center;
+    }
+  }
+
+  .page-title {
+    background-color: $primary-color;
+    color: $alternative-font-color;
+    padding: $spacing-04 $spacing-03;
+    font-size: 1.1rem;
+  }
+}
+
+.page-container {
+  @include display-grid(200px 1fr, none);
+
+  nav {
+    background-color: $primary-color-darken;
+
+    .menu-container {
+      position: sticky;
+      top: 0px;
+
+      .menu-title {
+        color: $primary-color-lighten;
+        padding: $spacing-02 0px;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      ul {
+        @include display-flex(column);
+        list-style-type: none;
+  
+        li {
+          background-color: $primary-color-lighten;
+          padding: $spacing-02;
+          border-right: 1px solid $grey-darken;
+          border-bottom: 1px solid $grey-darken;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  main {
+    background-color: $grey;
+    padding: $spacing-05;
+
+    .list {
+      @include display-flex(row);
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: $spacing-04;
+
+      .card {
+        @include display-flex(column);
+        justify-content: center;
+        align-items: center;
+        gap: $spacing-02;
+        flex: 0 1 17%;
+        min-width: 180px;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: $spacing-03 $spacing-05;
+        background-color: white;
+
+        img {
+          width: 100px;
+          border-radius: 50%;
+        }
+
+        .member-name {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+footer {
+  padding: $spacing-03;
+  background-color: $primary-color-lighten;
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    .toolbar {
+      display: none;
+    }
+  }
+
+  .page-container {
+    grid-template-columns: none;
+    grid-template-rows: repeat(2, min-content);
+
+    nav {
+      position: sticky;
+      top: 0px;
+
+      .menu-container {
+        .menu-title {
+          display: none;
+        }
+  
+        ul {
+          flex-direction: row;
+          gap: $spacing-04;
+          background-color: $primary-color-darken;
+          padding: $spacing-02;
+  
+          li {
+            flex: 1;
+            text-align: center;
+          }
+        }
+      }
+
+    }
+
+    main {
+      .list {
+        flex-direction: column;
+        gap: $spacing-01;
+
+        .card {
+          flex-direction: row;
+          justify-content: flex-start;
+          border-radius: initial;
+          border: initial;
+          gap: $spacing-03;
+
+          .member-name {
+            text-align: initial;
+          }
+        }
+      }
+    }
+  }
+}
